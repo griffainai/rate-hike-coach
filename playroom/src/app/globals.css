@@ -1,11 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html, body {
-    background-color: #0a0a0f;
-    color: #e8e8f0;
+    background-color: #FEFBF6;
+    color: #4A2C2A;
     font-family: 'Inter', system-ui, sans-serif;
   }
 
@@ -13,42 +15,75 @@
     box-sizing: border-box;
   }
 
+  /* Subtle paper-grain background texture */
+  body {
+    background-image:
+      radial-gradient(circle at 15% 12%, rgba(216, 191, 193, 0.18) 0%, transparent 35%),
+      radial-gradient(circle at 85% 88%, rgba(216, 191, 193, 0.15) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(249, 236, 223, 0.3) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #13131b;
+    background: #EFE3D7;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2a2a3a;
-    border-radius: 4px;
+    background: #7B5A5C;
+    border-radius: 0;
+    border: 2px solid #EFE3D7;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #3a3a4a;
+    background: #5D3136;
   }
 }
 
 @layer components {
   .panel {
-    @apply bg-bg-panel border border-bg-border rounded-lg;
+    @apply bg-cream-warm border-3 border-wine rounded-lg;
+    box-shadow: 4px 4px 0px 0px #5D3136;
+  }
+  .panel-flat {
+    @apply bg-cream-sand border-3 border-wine rounded-lg;
   }
   .card {
-    @apply bg-bg-card border border-bg-border rounded-md;
+    @apply bg-cream border-3 border-wine rounded-md;
+    box-shadow: 2px 2px 0px 0px #5D3136;
+  }
+  .btn-primary {
+    @apply bg-wine text-cream border-3 border-wine-deep rounded-lg uppercase tracking-wider font-mono font-medium px-4 py-2 transition-all;
+    box-shadow: 3px 3px 0px 0px #4A2C2A;
+  }
+  .btn-primary:hover:not(:disabled) {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0px 0px #4A2C2A;
+  }
+  .btn-primary:active:not(:disabled) {
+    transform: translate(3px, 3px);
+    box-shadow: 0px 0px 0px 0px #4A2C2A;
+  }
+  .display-tagline {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: #5D3136;
   }
 }
 
-/* Cope pattern flash highlight */
+/* Cope pattern flash — terracotta warm warning */
 @keyframes flashWarn {
-  0%, 100% { background-color: rgba(248, 113, 113, 0); }
-  50% { background-color: rgba(248, 113, 113, 0.25); }
+  0%, 100% { background-color: rgba(161, 74, 56, 0); }
+  50% { background-color: rgba(161, 74, 56, 0.25); }
 }
 
 .cope-flash {
   animation: flashWarn 1.6s ease-in-out;
 }
 
-/* Typing indicator */
+/* Typing indicator dots */
 @keyframes blink {
   0%, 80%, 100% { opacity: 0.2; }
   40% { opacity: 1; }
@@ -58,3 +93,10 @@
 }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Coach message subtle paper grain on the card itself */
+.coach-card {
+  background-image:
+    linear-gradient(180deg, #F9ECDF 0%, #F9ECDF 100%),
+    radial-gradient(circle at 30% 30%, rgba(216, 191, 193, 0.2) 0%, transparent 60%);
+}

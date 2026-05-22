@@ -14,7 +14,7 @@ export function StageIndicator({ current }: { current: Stage }) {
 
   return (
     <div className="panel p-4">
-      <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 mb-3 font-medium">
+      <div className="text-xs uppercase tracking-[0.2em] text-wine font-mono font-bold mb-3">
         STAGE CONTRACTS.
       </div>
       <div className="space-y-2">
@@ -25,31 +25,31 @@ export function StageIndicator({ current }: { current: Stage }) {
             <div
               key={stage.id}
               className={`flex items-start gap-3 p-2 rounded transition-colors ${
-                state === "active" ? "bg-bg-card" : ""
+                state === "active" ? "bg-cream" : ""
               }`}
             >
               <div
-                className={`w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 mt-0.5 ${
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono font-bold flex-shrink-0 mt-0.5 border-2 ${
                   state === "done"
-                    ? "bg-accent-ok text-bg"
+                    ? "bg-accent-ok border-wine-deep text-cream"
                     : state === "active"
-                      ? "bg-accent-user text-bg"
-                      : "bg-bg-border text-accent-coach/50"
+                      ? "bg-accent-drill border-wine-deep text-wine-deep"
+                      : "bg-cream-sand border-cream-dusty text-wine-soft"
                 }`}
               >
                 {state === "done" ? "✓" : idx + 1}
               </div>
               <div>
                 <div
-                  className={`text-sm font-medium ${
+                  className={`text-sm font-mono font-medium ${
                     state === "upcoming"
-                      ? "text-accent-coach/50"
-                      : "text-accent-coach"
+                      ? "text-wine-soft"
+                      : "text-wine-deep"
                   }`}
                 >
                   {stage.label}
                 </div>
-                <div className="text-xs text-accent-coach/40 leading-snug">
+                <div className="text-xs text-wine-muted leading-snug">
                   {stage.description}
                 </div>
               </div>
@@ -63,8 +63,6 @@ export function StageIndicator({ current }: { current: Stage }) {
 
 /**
  * Heuristic stage inference from the coach's recent messages.
- * In a fuller build, the coach would emit a stage signal explicitly.
- * For now we look at the assistant's most recent message for hints.
  */
 export function inferStage(messages: { role: string; content: string }[]): Stage {
   const lastAssistant = [...messages]
@@ -73,7 +71,6 @@ export function inferStage(messages: { role: string; content: string }[]): Stage
   if (!lastAssistant) return "intake";
   const t = lastAssistant.content.toLowerCase();
 
-  // Commit signals
   if (
     t.includes("walk-away") ||
     t.includes("walk away number") ||
@@ -90,7 +87,6 @@ export function inferStage(messages: { role: string; content: string }[]): Stage
     }
   }
 
-  // Drill signals (coach role-playing as client)
   if (
     t.includes("[client]") ||
     t.includes("as the client") ||
@@ -102,7 +98,6 @@ export function inferStage(messages: { role: string; content: string }[]): Stage
     return "drill";
   }
 
-  // Reflect signals (coach naming patterns)
   if (
     t.includes("pattern") ||
     t.includes("cope") ||

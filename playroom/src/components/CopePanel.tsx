@@ -9,11 +9,11 @@ export function CopePanel({
 }) {
   return (
     <div className="panel p-4">
-      <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 mb-3 font-medium">
+      <div className="text-xs uppercase tracking-[0.2em] text-wine font-mono font-bold mb-3">
         COPE DETECTED.
       </div>
       {detected.length === 0 ? (
-        <div className="text-sm text-accent-coach/40">
+        <div className="text-sm text-wine-muted font-mono">
           None yet. The coach is listening.
         </div>
       ) : (
@@ -21,15 +21,16 @@ export function CopePanel({
           {detected.map((p) => (
             <div
               key={p.id}
-              className="card p-3 border-l-2 border-l-accent-warn cope-flash"
+              className="card p-3 cope-flash"
+              style={{ borderLeftWidth: '6px', borderLeftColor: '#A14A38' }}
             >
               <div className="flex items-start gap-2">
-                <span className="text-accent-warn text-sm flex-shrink-0">⚠</span>
+                <span className="text-accent-warn text-sm flex-shrink-0 font-bold">⚠</span>
                 <div className="flex-1">
-                  <div className="text-sm font-medium text-accent-coach">
+                  <div className="text-sm font-mono font-bold text-wine-deep">
                     "{p.name}"
                   </div>
-                  <div className="text-xs text-accent-coach/60 mt-1 leading-snug">
+                  <div className="text-xs text-wine-muted mt-1 leading-snug">
                     {p.underneath}
                   </div>
                 </div>

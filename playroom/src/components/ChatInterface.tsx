@@ -38,7 +38,6 @@ export function ChatInterface() {
 
     setError(null);
 
-    // Detect cope patterns from the user's input
     const newPatterns = detectCope(text);
     if (newPatterns.length > 0) {
       setDetected((prev) => {
@@ -117,28 +116,28 @@ export function ChatInterface() {
   const sessionStarted = messages.length > 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-4 h-[calc(100vh-120px)]">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-5 h-[calc(100vh-140px)]">
       {/* Main chat column */}
       <div className="panel flex flex-col overflow-hidden">
-        <div className="px-5 py-3 border-b border-bg-border flex items-center justify-between">
+        <div className="px-5 py-3 border-b-3 border-wine bg-cream-sand flex items-center justify-between">
           <div>
-            <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 font-medium">
+            <div className="text-xs uppercase tracking-[0.2em] text-wine font-mono font-bold">
               DRILLING.
             </div>
-            <div className="text-sm font-medium">
+            <div className="text-sm font-mono font-medium text-wine-deep">
               The Rate Hike Conversation
             </div>
           </div>
           <button
             onClick={resetSession}
-            className="text-xs uppercase tracking-wider text-accent-coach/40 hover:text-accent-coach transition-colors px-3 py-1 border border-bg-border rounded"
+            className="text-xs uppercase tracking-wider text-wine-muted hover:text-wine transition-colors px-3 py-1 border-2 border-wine-muted hover:border-wine rounded font-mono font-medium"
           >
             End session
           </button>
         </div>
 
         {/* Messages */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4 bg-cream">
           {messages.length === 0 ? (
             <EmptyState />
           ) : (
@@ -156,15 +155,15 @@ export function ChatInterface() {
             ))
           )}
           {error && (
-            <div className="card p-3 border-l-2 border-l-accent-warn text-sm text-accent-warn">
+            <div className="card p-3 text-sm text-accent-warn font-mono" style={{ borderLeftWidth: '6px', borderLeftColor: '#A14A38' }}>
               {error}
             </div>
           )}
         </div>
 
         {/* Input */}
-        <div className="border-t border-bg-border p-3">
-          <div className="flex gap-2 items-end">
+        <div className="border-t-3 border-wine bg-cream-sand p-3">
+          <div className="flex gap-2 items-stretch">
             <textarea
               ref={inputRef}
               value={input}
@@ -177,12 +176,12 @@ export function ChatInterface() {
               }
               rows={2}
               disabled={isStreaming}
-              className="flex-1 bg-bg-card border border-bg-border rounded px-3 py-2 text-sm resize-none focus:outline-none focus:border-accent-user/50 disabled:opacity-50"
+              className="flex-1 bg-cream border-3 border-wine-deep rounded-md px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-wine focus:ring-offset-2 focus:ring-offset-cream-sand disabled:opacity-50 font-mono text-wine-deep placeholder:text-wine-soft"
             />
             <button
               onClick={sendMessage}
               disabled={isStreaming || !input.trim()}
-              className="px-4 py-2 bg-accent-user text-bg rounded text-sm font-medium uppercase tracking-wider hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+              className="btn-primary disabled:opacity-30 disabled:cursor-not-allowed self-stretch"
             >
               {stage === "drill" ? "Drill." : "Send."}
             </button>
@@ -214,19 +213,24 @@ function MessageBubble({
   return (
     <div className={`flex ${isCoach ? "justify-start" : "justify-end"}`}>
       <div
-        className={`max-w-[85%] rounded-lg px-4 py-3 ${
+        className={`max-w-[85%] rounded-lg px-4 py-3 border-3 ${
           isCoach
-            ? "bg-bg-card border border-bg-border text-accent-coach"
-            : "bg-accent-user/10 border border-accent-user/30 text-accent-coach"
+            ? "bg-cream-warm border-wine text-wine-deep"
+            : "bg-cream-sand border-wine-deep text-wine-deep"
         }`}
+        style={
+          isCoach
+            ? { boxShadow: '3px 3px 0px 0px #5D3136' }
+            : { boxShadow: '3px 3px 0px 0px #4A2C2A' }
+        }
       >
-        <div className="text-xs uppercase tracking-wider mb-1 opacity-50">
+        <div className="text-xs uppercase tracking-[0.18em] mb-1 font-mono font-bold text-wine">
           {isCoach ? "Coach" : "You"}
         </div>
-        <div className="text-sm whitespace-pre-wrap leading-relaxed">
+        <div className="text-sm whitespace-pre-wrap leading-relaxed font-sans">
           {content}
           {streaming && content.length === 0 && (
-            <span className="inline-flex gap-1">
+            <span className="inline-flex gap-1 text-wine">
               <span className="typing-dot">·</span>
               <span className="typing-dot">·</span>
               <span className="typing-dot">·</span>
@@ -241,20 +245,20 @@ function MessageBubble({
 function EmptyState() {
   return (
     <div className="h-full flex flex-col items-center justify-center text-center px-6">
-      <div className="text-5xl mb-4">🥊</div>
-      <div className="text-2xl font-medium text-accent-coach mb-1 tracking-tight">
+      <div className="text-6xl mb-4">🥊</div>
+      <div className="display-tagline text-4xl md:text-5xl mb-2">
         Drill. Name. Hold.
       </div>
-      <div className="text-xs uppercase tracking-[0.2em] text-accent-coach/50 mb-6 font-medium">
+      <div className="text-xs uppercase tracking-[0.25em] text-wine-muted mb-6 font-mono font-medium">
         THE REHEARSAL ROOM.
       </div>
-      <div className="text-sm text-accent-coach/70 max-w-md leading-relaxed space-y-2">
+      <div className="text-base text-wine-deep max-w-md leading-relaxed space-y-2 font-sans">
         <p>Tell the coach about the client.</p>
         <p>Two years. Same rate. You're about to ask for more.</p>
         <p>Start with that.</p>
       </div>
-      <div className="text-xs text-accent-coach/40 mt-6 max-w-md font-medium tracking-wide">
-        NO NUMBERS. NO SCRIPTS. NO EMAILS.
+      <div className="text-xs text-wine-muted mt-8 max-w-md font-mono font-bold tracking-wider uppercase border-3 border-wine-muted rounded px-4 py-2 inline-block">
+        No numbers. No scripts. No emails.
       </div>
     </div>
   );
@@ -263,18 +267,18 @@ function EmptyState() {
 function CommitPanel({ stage }: { stage: Stage }) {
   if (stage !== "commit") return null;
   return (
-    <div className="panel p-4 border border-accent-ok/30">
-      <div className="text-xs uppercase tracking-[0.18em] text-accent-ok mb-2 font-medium">
+    <div className="panel p-4" style={{ borderColor: '#5A7A4E', boxShadow: '4px 4px 0px 0px #5A7A4E' }}>
+      <div className="text-xs uppercase tracking-[0.2em] mb-2 font-mono font-bold" style={{ color: '#5A7A4E' }}>
         COMMIT.
       </div>
-      <div className="text-xs text-accent-coach/70 leading-snug space-y-1">
+      <div className="text-xs text-wine-deep leading-snug space-y-1 font-mono">
         <div>• Walk-away number: $___</div>
         <div>• First-line: "___"</div>
         <div>• Call date: ___</div>
         <div>• Cope to watch: ___</div>
       </div>
-      <div className="text-xs text-accent-coach/40 mt-2">
-        Log this in <code>sessions/</code> when done.
+      <div className="text-xs text-wine-muted mt-2 font-mono">
+        Log this in <code className="bg-cream-sand px-1 rounded">sessions/</code> when done.
       </div>
     </div>
   );

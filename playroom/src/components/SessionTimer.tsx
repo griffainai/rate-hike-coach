@@ -22,28 +22,28 @@ export function SessionTimer({ started }: { started: boolean }) {
 
   return (
     <div className="panel p-4">
-      <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 mb-2 font-medium">
+      <div className="text-xs uppercase tracking-[0.2em] text-wine font-mono font-bold mb-2">
         TIMER.
       </div>
       <div
-        className={`text-2xl font-mono ${
+        className={`text-3xl font-mono font-bold tracking-tight ${
           overLimit
             ? "text-accent-warn"
             : warning
               ? "text-accent-drill"
-              : "text-accent-coach"
+              : "text-wine-deep"
         }`}
       >
         {minutes.toString().padStart(2, "0")}:
         {secs.toString().padStart(2, "0")}
-        <span className="text-accent-coach/30 text-sm">
+        <span className="text-wine-soft text-sm">
           {" "}
           / 30:00
         </span>
       </div>
       {overLimit && (
-        <div className="text-xs text-accent-warn mt-2">
-          Session over time. The coach will hold the cap.
+        <div className="text-xs text-accent-warn mt-2 font-mono">
+          Session over time. Coach holds the cap.
         </div>
       )}
     </div>

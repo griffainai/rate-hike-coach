@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-bg text-accent-coach">
+      <body className="min-h-screen text-wine-deep font-sans">
         {children}
       </body>
     </html>
