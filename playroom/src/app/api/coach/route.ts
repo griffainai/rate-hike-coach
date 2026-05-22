@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
-import { loadCoachSystemPrompt } from "@/lib/coach-context";
+import { loadCoachSystemPrompt, type CoachMode } from "@/lib/coach-context";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,6 +11,15 @@ type ClientMessage = {
 };
 
 const MODEL = process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5";
+
+const VALID_MODES: CoachMode[] = ["pre-game", "halftime", "timeout", "post-game"];
+
+function parseMode(input: unknown): CoachMode {
+  if (typeof input === "string" && (VALID_MODES as string[]).includes(input)) {
+    return input as CoachMode;
+  }
+  return "pre-game";
+}
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -23,7 +32,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { messages: ClientMessage[] };
+  let body: { messages: ClientMessage[]; mode?: string };
   try {
     body = await req.json();
   } catch {
@@ -43,8 +52,12 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const systemPrompt = await loadCoachSystemPrompt();
+  const mode = parseMode(body.mode);
+  const systemPrompt = await loadCoachSystemPrompt(mode);
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+  // Timeout mode uses a tighter max_tokens to enforce response brevity.
+  const maxTokens = mode === "timeout" ? 400 : 2048;
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
@@ -52,9 +65,7 @@ export async function POST(req: NextRequest) {
       try {
         const response = await client.messages.create({
           model: MODEL,
-          max_tokens: 2048,
-          // Prompt caching: cache the system prompt so repeated turns
-          // in the same session don't re-pay input tokens.
+          max_tokens: maxTokens,
           system: [
             {
               type: "text",
@@ -93,6 +104,7 @@ export async function POST(req: NextRequest) {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-cache, no-transform",
       "X-Content-Type-Options": "nosniff",
+      "X-Coach-Mode": mode,
     },
   });
 }

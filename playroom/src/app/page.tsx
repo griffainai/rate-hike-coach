@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
  * Visitors arriving at / watch this first; CTA → /coach
  * ============================================================ */
 
-const SCENE_DURATIONS_MS = [5000, 5500, 9500, 10500, 7500, 7500, 6500];
+const SCENE_DURATIONS_MS = [5000, 5500, 9500, 10500, 7500, 8500, 7500, 6500];
 const TOTAL_SCENES = SCENE_DURATIONS_MS.length;
 
 export default function HomePage() {
@@ -87,8 +87,9 @@ function SceneRouter({ index }: { index: number }) {
     case 2: return <Scene3 key="s3" />;
     case 3: return <Scene4 key="s4" />;
     case 4: return <Scene5 key="s5" />;
-    case 5: return <Scene6 key="s6" />;
-    case 6: return <Scene7 key="s7" />;
+    case 5: return <SceneModes key="s6" />;
+    case 6: return <Scene6 key="s7" />;
+    case 7: return <Scene7 key="s8" />;
     default: return null;
   }
 }
@@ -291,6 +292,50 @@ function SurfaceIcon({ icon, label, sub, highlight = false }: { icon: string; la
 function Arrow() {
   return (
     <div className="font-mono text-3xl md:text-4xl text-wine font-bold">→</div>
+  );
+}
+
+function SceneModes() {
+  const modes = [
+    { emoji: "🏋️", label: "Pre-Game.", desc: "Drill 24 hours before.", color: "#5D3136" },
+    { emoji: "🔄", label: "Halftime.", desc: "Reset mid-rehearsal.", color: "#7B5A5C" },
+    { emoji: "⏱️", label: "Timeout.", desc: "On the call. Right now.", color: "#A14A38" },
+    { emoji: "📓", label: "Post-Game.", desc: "Debrief the real call.", color: "#5A7A4E" },
+  ];
+
+  return (
+    <div className="text-center max-w-5xl mx-auto stagger">
+      <div className="size-small font-mono font-bold text-wine-muted mb-3 uppercase" style={{ animationDelay: "0ms" }}>
+        Four moments.
+      </div>
+      <div className="size-large font-mono font-bold text-wine mb-10" style={{ animationDelay: "400ms" }}>
+        Same coach. Four protocols.
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        {modes.map((m, i) => (
+          <div
+            key={m.label}
+            className="panel p-5 text-left"
+            style={{
+              animationDelay: `${1100 + i * 500}ms`,
+              borderColor: m.color,
+              boxShadow: `5px 5px 0px 0px ${m.color}`,
+            }}
+          >
+            <div className="text-4xl mb-3">{m.emoji}</div>
+            <div className="text-lg md:text-xl font-mono font-bold mb-2" style={{ color: m.color }}>
+              {m.label}
+            </div>
+            <div className="text-sm text-wine-deep font-sans leading-snug">
+              {m.desc}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="size-medium font-mono font-bold text-wine-deep mt-10" style={{ animationDelay: "3500ms" }}>
+        Pick your moment. The protocol adapts.
+      </div>
+    </div>
   );
 }
 

@@ -6,8 +6,10 @@
 
 Not a calculator. Not a course. Not a pricing framework. A coach.
 
-🎬 **Watch the 60-second demo:** https://rate-hike-coach.vercel.app *(auto-plays on landing)*
-🌐 **Open the coach:** https://rate-hike-coach.vercel.app/coach
+🎬 **Watch the demo:** https://rate-hike-coach.vercel.app *(auto-plays on landing)*
+🌐 **Pick your mode:** https://rate-hike-coach.vercel.app/coach
+
+The coach has **four game-time modes** — Pre-Game, Halftime, Timeout, Post-Game. Same coach. Four protocols. Pick the moment you're in.
 📂 **Or:** drop this folder into any Claude Project and you have the coach. No app required.
 
 ---
@@ -76,6 +78,29 @@ That's the difference. It runs for 30 minutes. By the end, you have a walk-away 
 
 ---
 
+## Four game-time modes
+
+The coach isn't a single chat. It's four protocols, one for each moment a solo consultant might be in during the rate-hike arc.
+
+| Mode | When you use it | What the coach does | URL |
+|------|----------------|---------------------|-----|
+| 🏋️ **Pre-Game** | 24–48 hours before the real call | Full 4-phase Stage Contracts: Intake → Reflect → Drill → Commit. Drills the conversation, locks the walk-away number, rehearses the opening line. | `/coach/pre-game` |
+| 🔄 **Halftime** | Mid-rehearsal, drill isn't landing | Skips Intake. Names the meta-pattern across your session. Proposes one specific reset. Re-enters Drill from a new angle. | `/coach/halftime` |
+| ⏱️ **Timeout** | You're ON THE CALL right now | 60-second emergency protocol. One grounding line. One question for the client to buy time. Exit line if needed. Every response under 80 words. | `/coach/timeout` |
+| 📓 **Post-Game** | After the real call, debriefing | Forensic structure. What did you actually say vs your walk-away? Where did you flinch? Which cope showed up? What gets logged to `sessions/`? | `/coach/post-game` |
+
+Each mode has its own:
+
+- Mode-specific system prompt block prepended to the coach's base constitution
+- Stage Contracts (Pre-Game has 4 phases, Halftime has 3, Timeout has 3 emergency steps, Post-Game has 4 forensic steps)
+- UI accent color (wine for Pre-Game, dusty pink for Halftime, terracotta for Timeout, olive for Post-Game)
+- Empty-state copy and input placeholder
+- Response length governance (Timeout caps responses at ~80 words; others run full)
+
+The mode picker at `/coach` shows all four with descriptions. Pick one, drop in, drill.
+
+---
+
 ## Folder map
 
 Each file does one job.
@@ -93,9 +118,10 @@ rate-hike-coach/
 │   ├── cope-patterns.md            ← Named catalog of self-justifications
 │   ├── walk-away-drills.md         ← Role-play scripts the coach uses to drill you
 │   └── coaching-moments/
-│       ├── pre-call.md             ← 24 hours before the real call
-│       ├── mid-call-panic.md       ← 60-second protocol when you freeze mid-call
-│       └── post-call-debrief.md    ← Structured debrief after a real call
+│       ├── pre-call.md             ← 24 hours before the real call (Pre-Game mode)
+│       ├── halftime.md             ← Mid-rehearsal reset protocol (Halftime mode)
+│       ├── mid-call-panic.md       ← 60-second protocol when you freeze mid-call (Timeout mode)
+│       └── post-call-debrief.md    ← Structured debrief after a real call (Post-Game mode)
 │
 ├── patterns/                       ← Named coaching moves the coach uses
 │   ├── pull-before-push.md

@@ -1,24 +1,21 @@
 "use client";
 
-export type Stage = "intake" | "reflect" | "drill" | "commit";
+import { Mode, MODES } from "@/lib/modes";
 
-const STAGES: { id: Stage; label: string; description: string }[] = [
-  { id: "intake", label: "Intake", description: "Tell the story. Coach only asks." },
-  { id: "reflect", label: "Reflect", description: "Coach names what it heard." },
-  { id: "drill", label: "Drill", description: "Coach plays the client." },
-  { id: "commit", label: "Commit", description: "Number, line, date." },
-];
+export type Stage = string;
 
-export function StageIndicator({ current }: { current: Stage }) {
-  const currentIdx = STAGES.findIndex((s) => s.id === current);
+export function StageIndicator({ current, mode }: { current: Stage; mode: Mode }) {
+  const meta = MODES[mode];
+  const stages = meta.stages;
+  const currentIdx = stages.findIndex((s) => s.id === current);
 
   return (
     <div className="panel p-4">
       <div className="text-xs uppercase tracking-[0.2em] text-wine font-mono font-bold mb-3">
-        STAGE CONTRACTS.
+        {mode === "timeout" ? "PROTOCOL." : "STAGE CONTRACTS."}
       </div>
       <div className="space-y-2">
-        {STAGES.map((stage, idx) => {
+        {stages.map((stage, idx) => {
           const state =
             idx < currentIdx ? "done" : idx === currentIdx ? "active" : "upcoming";
           return (
@@ -33,9 +30,10 @@ export function StageIndicator({ current }: { current: Stage }) {
                   state === "done"
                     ? "bg-accent-ok border-wine-deep text-cream"
                     : state === "active"
-                      ? "bg-accent-drill border-wine-deep text-wine-deep"
+                      ? "border-wine-deep text-wine-deep"
                       : "bg-cream-sand border-cream-dusty text-wine-soft"
                 }`}
+                style={state === "active" ? { background: meta.accentHex === "#5D3136" ? "#C89F4B" : meta.bgTint } : undefined}
               >
                 {state === "done" ? "✓" : idx + 1}
               </div>
@@ -62,50 +60,65 @@ export function StageIndicator({ current }: { current: Stage }) {
 }
 
 /**
- * Heuristic stage inference from the coach's recent messages.
+ * Heuristic stage inference per mode.
  */
-export function inferStage(messages: { role: string; content: string }[]): Stage {
+export function inferStage(messages: { role: string; content: string }[], mode: Mode): Stage {
+  const meta = MODES[mode];
+  const stages = meta.stages.map((s) => s.id);
   const lastAssistant = [...messages]
     .reverse()
     .find((m) => m.role === "assistant");
-  if (!lastAssistant) return "intake";
+  if (!lastAssistant) return stages[0];
+
   const t = lastAssistant.content.toLowerCase();
 
-  if (
-    t.includes("walk-away") ||
-    t.includes("walk away number") ||
-    t.includes("commit") ||
-    t.includes("by friday") ||
-    /\$\d+/.test(t)
-  ) {
+  if (mode === "pre-game") {
     if (
-      t.includes("commit") ||
-      t.includes("date") ||
-      t.includes("when will you")
+      (t.includes("commit") && (t.includes("date") || t.includes("when will you"))) ||
+      t.includes("walk-away") ||
+      /\$\d+/.test(t)
     ) {
       return "commit";
     }
+    if (
+      t.includes("[client]") ||
+      t.includes("as the client") ||
+      t.includes("playing the client") ||
+      t.includes("let's drill") ||
+      t.includes("budgeted") ||
+      t.includes("that's a big jump")
+    ) {
+      return "drill";
+    }
+    if (
+      t.includes("pattern") ||
+      t.includes("cope") ||
+      t.includes("that's the") ||
+      t.includes("i'm hearing")
+    ) {
+      return "reflect";
+    }
+    return "intake";
   }
 
-  if (
-    t.includes("[client]") ||
-    t.includes("as the client") ||
-    t.includes("playing the client") ||
-    t.includes("let's drill") ||
-    t.includes("budgeted") ||
-    t.includes("that's a big jump")
-  ) {
-    return "drill";
+  if (mode === "halftime") {
+    if (t.includes("commit") || t.includes("walk-away") || /\$\d+/.test(t)) return "commit";
+    if (t.includes("[client]") || t.includes("let's run") || t.includes("drill")) return "redrill";
+    return "reset";
   }
 
-  if (
-    t.includes("pattern") ||
-    t.includes("cope") ||
-    t.includes("that's the") ||
-    t.includes("i'm hearing")
-  ) {
-    return "reflect";
+  if (mode === "timeout") {
+    if (t.includes("come back to this in writing") || t.includes("end the call") || t.includes("walk")) return "exit";
+    if (t.includes("ask them") || t.includes("buy time") || t.includes("?")) return "buy-time";
+    return "ground";
   }
 
-  return "intake";
+  if (mode === "post-game") {
+    if (t.includes("log") || t.includes("sessions/") || t.includes("next call")) return "log";
+    if (t.includes("pattern") || t.includes("cope") || t.includes("that's the")) return "pattern";
+    if (t.includes("flinch") || t.includes("soften")) return "flinch";
+    return "what-happened";
+  }
+
+  return stages[0];
 }
