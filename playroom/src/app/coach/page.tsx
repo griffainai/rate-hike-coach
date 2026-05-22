@@ -6,6 +6,60 @@ export const metadata = {
   description: "Pre-Game. Halftime. Timeout. Post-Game. Same coach. Four moments.",
 };
 
+function PreGameFeatureCard() {
+  const meta = MODES["pre-game"];
+  return (
+    <Link
+      href="/coach/pre-game"
+      className="group panel block p-6 md:p-8 transition-transform hover:-translate-y-1 hover:-translate-x-0.5 relative"
+      style={{
+        borderColor: meta.borderTint,
+        boxShadow: `6px 6px 0px 0px ${meta.shadowHex}`,
+      }}
+    >
+      {/* START HERE badge */}
+      <div
+        className="absolute -top-3 left-6 text-xs uppercase tracking-[0.2em] font-mono font-bold px-3 py-1 border-3 rounded"
+        style={{
+          background: "#FEFBF6",
+          borderColor: meta.shadowHex,
+          color: meta.accentHex,
+        }}
+      >
+        ★ Start here. First-time visitors.
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] items-center gap-6 mt-2">
+        <div className="text-5xl md:text-6xl">{meta.emoji}</div>
+        <div>
+          <div
+            className="text-2xl md:text-3xl font-mono font-bold mb-1"
+            style={{ color: meta.accentHex }}
+          >
+            {meta.label}. {meta.subtitle}
+          </div>
+          <div className="text-sm text-wine-deep font-sans leading-relaxed mb-2">
+            {meta.description}
+          </div>
+          <div className="text-xs uppercase tracking-wider text-wine-muted font-mono font-bold">
+            WHEN: {meta.when}
+          </div>
+        </div>
+        <div
+          className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.15em] font-mono font-bold py-3 px-5 border-3 rounded transition-colors group-hover:bg-wine group-hover:text-cream"
+          style={{
+            borderColor: meta.shadowHex,
+            color: meta.accentHex,
+            background: "#FEFBF6",
+          }}
+        >
+          Drill →
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default function CoachLandingPage() {
   return (
     <main className="min-h-screen flex flex-col bg-cream text-wine-deep">
@@ -38,33 +92,44 @@ export default function CoachLandingPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
-          {MODE_ORDER.map((mode) => {
+        {/* RECOMMENDED — Pre-Game (the default test-this-first mode) */}
+        <div className="mb-8">
+          <PreGameFeatureCard />
+        </div>
+
+        <div className="text-center mb-6">
+          <div className="text-xs uppercase tracking-[0.25em] text-wine-muted font-mono font-bold">
+            Or pick another moment.
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+          {MODE_ORDER.filter((m) => m !== "pre-game").map((mode) => {
             const meta = MODES[mode];
             return (
               <Link
                 key={mode}
                 href={`/coach/${mode}`}
-                className="group panel p-6 md:p-7 transition-transform hover:-translate-y-1 hover:-translate-x-0.5 flex flex-col"
+                className="group panel p-5 md:p-6 transition-transform hover:-translate-y-1 hover:-translate-x-0.5 flex flex-col"
                 style={{
                   borderColor: meta.borderTint,
                   boxShadow: `5px 5px 0px 0px ${meta.shadowHex}`,
                 }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="text-4xl md:text-5xl">{meta.emoji}</div>
+                <div className="flex items-start justify-between mb-3">
+                  <div className="text-3xl md:text-4xl">{meta.emoji}</div>
                   <div className="text-xs uppercase tracking-[0.2em] font-mono font-bold opacity-50" style={{ color: meta.accentHex }}>
                     {meta.label.toUpperCase()}.
                   </div>
                 </div>
 
                 <div
-                  className="text-2xl md:text-3xl font-mono font-bold mb-2"
+                  className="text-xl md:text-2xl font-mono font-bold mb-2"
                   style={{ color: meta.accentHex }}
                 >
                   {meta.label}.
                 </div>
-                <div className="text-base font-mono font-medium text-wine-deep mb-3">
+                <div className="text-sm font-mono font-medium text-wine-deep mb-3">
                   {meta.subtitle}
                 </div>
                 <div className="text-xs uppercase tracking-wider text-wine-muted font-mono font-bold mb-3">
@@ -75,7 +140,7 @@ export default function CoachLandingPage() {
                 </div>
 
                 <div
-                  className="mt-5 inline-flex items-center gap-2 self-start text-xs uppercase tracking-[0.15em] font-mono font-bold py-2 px-3 border-3 rounded transition-colors group-hover:bg-wine group-hover:text-cream"
+                  className="mt-4 inline-flex items-center gap-2 self-start text-xs uppercase tracking-[0.15em] font-mono font-bold py-2 px-3 border-3 rounded transition-colors group-hover:bg-wine group-hover:text-cream"
                   style={{
                     borderColor: meta.shadowHex,
                     color: meta.accentHex,

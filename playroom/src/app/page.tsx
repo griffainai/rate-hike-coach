@@ -384,11 +384,11 @@ function Scene7() {
       </div>
 
       <div className="font-mono text-sm md:text-base text-wine-muted mb-6 uppercase tracking-wider" style={{ animationDelay: "1700ms" }}>
-        rate-hike-coach.vercel.app/coach
+        rate-hike-coach.vercel.app
       </div>
 
-      <a href="/coach" className="cta-btn" style={{ animationDelay: "2400ms" }}>
-        Open the coach →
+      <a href="/coach/pre-game" className="cta-btn" style={{ animationDelay: "2400ms" }}>
+        Start drilling →
       </a>
     </div>
   );
@@ -424,10 +424,13 @@ function DoneOverlay({ onReplay }: { onReplay: () => void }) {
           Folder. App. Same coach.
         </div>
         <div className="flex items-center justify-center gap-4 flex-wrap" style={{ animationDelay: "800ms" }}>
-          <a href="/coach" className="cta-btn">Open the coach →</a>
+          <a href="/coach/pre-game" className="cta-btn">Start drilling →</a>
           <button onClick={onReplay} className="cta-btn" style={{ background: "#FEFBF6", color: "#5D3136", boxShadow: "5px 5px 0px 0px #5D3136", borderColor: "#5D3136" }}>
             ↻ Replay
           </button>
+        </div>
+        <div className="mt-4 font-mono text-xs uppercase tracking-wider text-wine-muted" style={{ animationDelay: "1100ms" }}>
+          Other modes (Halftime, Timeout, Post-Game) → <a href="/coach" className="text-wine hover:underline">coach picker</a>
         </div>
         <div className="mt-10 font-mono text-xs text-wine-muted uppercase tracking-wider" style={{ animationDelay: "1300ms" }}>
           <a href="https://github.com/griffainai/rate-hike-coach" className="hover:text-wine underline-offset-2 hover:underline">
