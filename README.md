@@ -6,8 +6,8 @@
 
 Not a calculator. Not a course. Not a pricing framework. A coach.
 
-🎬 **Watch the 60-second demo:** https://rate-hike-coach.vercel.app/demo
-🌐 **Try the live coach:** https://rate-hike-coach.vercel.app
+🎬 **Watch the 60-second demo:** https://rate-hike-coach.vercel.app *(auto-plays on landing)*
+🌐 **Open the coach:** https://rate-hike-coach.vercel.app/coach
 📂 **Or:** drop this folder into any Claude Project and you have the coach. No app required.
 
 ---
@@ -150,9 +150,9 @@ Opens at http://localhost:3000 with the visual UI:
 
 ### Option 3: Use the live deployed app
 
-**👉 https://rate-hike-coach.vercel.app**
+**👉 Demo + coach:** https://rate-hike-coach.vercel.app
 
-No setup. Just open and start the session. The Anthropic key is server-side, you don't need your own.
+The landing page auto-plays a 55-second demo. The "Open the coach →" button at the end (or the "Skip to coach →" link at top-right) drops you straight into `/coach`. No setup. No API key. Server-side Anthropic.
 
 ---
 
