@@ -6,7 +6,8 @@
 
 Not a calculator. Not a course. Not a pricing framework. A coach.
 
-🌐 **Live demo:** https://rate-hike-coach.vercel.app
+🎬 **Watch the 60-second demo:** https://rate-hike-coach.vercel.app/demo
+🌐 **Try the live coach:** https://rate-hike-coach.vercel.app
 📂 **Or:** drop this folder into any Claude Project and you have the coach. No app required.
 
 ---
