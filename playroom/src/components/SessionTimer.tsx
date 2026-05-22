@@ -22,8 +22,8 @@ export function SessionTimer({ started }: { started: boolean }) {
 
   return (
     <div className="panel p-4">
-      <div className="text-xs uppercase tracking-wider text-accent-coach/50 mb-2">
-        Session Timer
+      <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 mb-2 font-medium">
+        TIMER.
       </div>
       <div
         className={`text-2xl font-mono ${

@@ -9,11 +9,11 @@ export function CopePanel({
 }) {
   return (
     <div className="panel p-4">
-      <div className="text-xs uppercase tracking-wider text-accent-coach/50 mb-3">
-        Cope Patterns Detected
+      <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 mb-3 font-medium">
+        COPE DETECTED.
       </div>
       {detected.length === 0 ? (
-        <div className="text-sm text-accent-coach/40 italic">
+        <div className="text-sm text-accent-coach/40">
           None yet. The coach is listening.
         </div>
       ) : (

@@ -122,16 +122,16 @@ export function ChatInterface() {
       <div className="panel flex flex-col overflow-hidden">
         <div className="px-5 py-3 border-b border-bg-border flex items-center justify-between">
           <div>
-            <div className="text-xs uppercase tracking-wider text-accent-coach/50">
-              Drilling
+            <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 font-medium">
+              DRILLING.
             </div>
             <div className="text-sm font-medium">
-              Rate Hike Conversation
+              The Rate Hike Conversation
             </div>
           </div>
           <button
             onClick={resetSession}
-            className="text-xs text-accent-coach/40 hover:text-accent-coach transition-colors px-3 py-1 border border-bg-border rounded"
+            className="text-xs uppercase tracking-wider text-accent-coach/40 hover:text-accent-coach transition-colors px-3 py-1 border border-bg-border rounded"
           >
             End session
           </button>
@@ -172,8 +172,8 @@ export function ChatInterface() {
               onKeyDown={handleKey}
               placeholder={
                 messages.length === 0
-                  ? "Tell the coach about the client you want to raise rates with…"
-                  : "Type your response. Enter to send, Shift+Enter for newline."
+                  ? "Tell the coach about the client. Concrete. One example."
+                  : "Type. Enter sends. Shift+Enter for newline."
               }
               rows={2}
               disabled={isStreaming}
@@ -182,9 +182,9 @@ export function ChatInterface() {
             <button
               onClick={sendMessage}
               disabled={isStreaming || !input.trim()}
-              className="px-4 py-2 bg-accent-user text-bg rounded text-sm font-medium hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+              className="px-4 py-2 bg-accent-user text-bg rounded text-sm font-medium uppercase tracking-wider hover:opacity-90 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
             >
-              Send
+              {stage === "drill" ? "Drill." : "Send."}
             </button>
           </div>
         </div>
@@ -241,17 +241,20 @@ function MessageBubble({
 function EmptyState() {
   return (
     <div className="h-full flex flex-col items-center justify-center text-center px-6">
-      <div className="text-4xl mb-3">🥊</div>
-      <div className="text-lg font-medium text-accent-coach mb-2">
-        The Rehearsal Room
+      <div className="text-5xl mb-4">🥊</div>
+      <div className="text-2xl font-medium text-accent-coach mb-1 tracking-tight">
+        Drill. Name. Hold.
       </div>
-      <div className="text-sm text-accent-coach/60 max-w-md leading-relaxed">
-        Start the session by telling the coach about the client you want to raise rates with.
-        How long they've been a client, what you charge now, what their reaction would be.
+      <div className="text-xs uppercase tracking-[0.2em] text-accent-coach/50 mb-6 font-medium">
+        THE REHEARSAL ROOM.
       </div>
-      <div className="text-xs text-accent-coach/40 mt-4 max-w-md">
-        The coach will refuse to give you a number, a script, or an email.
-        It will drill you on the conversation until you can hold your rate without flinching.
+      <div className="text-sm text-accent-coach/70 max-w-md leading-relaxed space-y-2">
+        <p>Tell the coach about the client.</p>
+        <p>Two years. Same rate. You're about to ask for more.</p>
+        <p>Start with that.</p>
+      </div>
+      <div className="text-xs text-accent-coach/40 mt-6 max-w-md font-medium tracking-wide">
+        NO NUMBERS. NO SCRIPTS. NO EMAILS.
       </div>
     </div>
   );
@@ -261,8 +264,8 @@ function CommitPanel({ stage }: { stage: Stage }) {
   if (stage !== "commit") return null;
   return (
     <div className="panel p-4 border border-accent-ok/30">
-      <div className="text-xs uppercase tracking-wider text-accent-ok mb-2">
-        Commit Phase
+      <div className="text-xs uppercase tracking-[0.18em] text-accent-ok mb-2 font-medium">
+        COMMIT.
       </div>
       <div className="text-xs text-accent-coach/70 leading-snug space-y-1">
         <div>• Walk-away number: $___</div>
@@ -270,8 +273,8 @@ function CommitPanel({ stage }: { stage: Stage }) {
         <div>• Call date: ___</div>
         <div>• Cope to watch: ___</div>
       </div>
-      <div className="text-xs text-accent-coach/40 mt-2 italic">
-        Paste the coach's session-log into <code>sessions/</code> when done.
+      <div className="text-xs text-accent-coach/40 mt-2">
+        Log this in <code>sessions/</code> when done.
       </div>
     </div>
   );

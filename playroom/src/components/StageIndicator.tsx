@@ -14,8 +14,8 @@ export function StageIndicator({ current }: { current: Stage }) {
 
   return (
     <div className="panel p-4">
-      <div className="text-xs uppercase tracking-wider text-accent-coach/50 mb-3">
-        Stage Contracts
+      <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 mb-3 font-medium">
+        STAGE CONTRACTS.
       </div>
       <div className="space-y-2">
         {STAGES.map((stage, idx) => {

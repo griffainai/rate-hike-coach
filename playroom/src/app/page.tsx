@@ -7,18 +7,20 @@ export default function Page() {
         <div className="flex items-center gap-3">
           <div className="text-2xl">🥊</div>
           <div>
-            <div className="text-xs uppercase tracking-wider text-accent-coach/50">
-              The Rehearsal Room
+            <div className="text-xs uppercase tracking-[0.18em] text-accent-coach/50 font-medium">
+              The Rate Hike Coach
             </div>
-            <div className="text-base font-medium">
-              Rate Hike Coach
+            <div className="text-base font-medium tracking-tight">
+              Drill. Name. Hold.
             </div>
           </div>
         </div>
         <div className="text-xs text-accent-coach/50 text-right">
-          <div>For solo consultants raising rates with long-term clients.</div>
+          <div className="font-medium text-accent-coach/70">
+            For solo consultants raising rates.
+          </div>
           <div className="text-accent-coach/40">
-            The coach plays the client. You drill the conversation.
+            The coach plays the client. You hold the number.
           </div>
         </div>
       </header>
@@ -26,20 +28,27 @@ export default function Page() {
         <ChatInterface />
       </div>
       <footer className="border-t border-bg-border px-5 py-2 text-xs text-accent-coach/40 flex items-center justify-between">
+        <div className="font-medium tracking-wide">
+          FOLDER. APP. SAME COACH.
+        </div>
         <div>
-          Built on{" "}
           <a
-            href="https://github.com/anthropics/skills"
+            href="https://github.com/griffainai/rate-hike-coach"
             className="text-accent-coach/60 hover:text-accent-coach underline-offset-2 hover:underline"
             target="_blank"
             rel="noreferrer"
           >
-            ICM
+            github.com/griffainai/rate-hike-coach
           </a>
-          . Folder is the architecture. UI is a viewer.
-        </div>
-        <div>
-          See <code>identity.md</code> + <code>rules.md</code> for what the coach actually is.
+          {" "}·{" "}
+          <a
+            href="https://eduba.io"
+            className="text-accent-coach/60 hover:text-accent-coach underline-offset-2 hover:underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            built on ICM
+          </a>
         </div>
       </footer>
     </main>
